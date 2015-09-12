@@ -3,38 +3,68 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./main-template.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui">
-     <ui:param name="titulo" value="Registro de Ventas" />
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:param name="titulo" value="Registro de Ventas" />
     <ui:define name="body">
         
-        <p:panel header="Tabla ventas">
-            <p:dataTable id="ventasTable"
-                         value="#{ventasBean.ventas}"
-                         var="venta">
-                
-                <p:column headerText="Fecha de Venta">
-                    <h:outputText value="#{venta.fechaVenta}"/>
-                </p:column>
-                
-                <p:column headerText="Cantidad">
-                    <h:outputText value="#{venta.cantidad}"/>
-                </p:column>
-                
-                <p:column headerText="Producto">
-                    <h:outputText value="#{venta.producto.nombre}"/>
-                </p:column>
-                
-                <p:column headerText="Ciudad">
-                    <h:outputText value="#{venta.ciudad}"/>
-                </p:column>
-                
-                <p:column headerText="Cliente">
-                    <h:outputText value="#{venta.comprador.nombreCompleto}"/>
-                </p:column>
-                
-            </p:dataTable>
-           </p:panel>
+            <p:panel header="Tabla ventas">
+                <h:panelGrid columns="2">
+
+
+                    <h:commandButton style="background: transparent"
+                                     image="./resources/img/graphics/chart.jpg"
+                                     title="Ver grafica" 
+                                     onclick="PF('dlg1').show();"/>
+                </h:panelGrid>
+
+                <p:dataTable id="ventasTable"
+                             value="#{ventasBean.ventas}"
+                             var="venta">
+
+                    <f:facet name="{Exporters}">
+
+                       
+
+
+
+                    </f:facet>
+
+                    <p:column headerText="Fecha de Venta">
+                        <h:outputText value="#{venta.fechaVenta}"/>
+                    </p:column>
+
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{venta.cantidad}"/>
+                    </p:column>
+
+                    <p:column headerText="Producto">
+                        <h:outputText value="#{venta.producto.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="Ciudad">
+                        <h:outputText value="#{venta.ciudad}"/>
+                    </p:column>
+
+                    <p:column headerText="Cliente">
+                        <h:outputText value="#{venta.comprador.login}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <h:form>
+                 <h:commandLink >
+                            <p:graphicImage name="resources/img/graphics/csv.jpg" width="24"/>
+                            <p:dataExporter type="csv" target=":ventasTable" fileName="ventas" />
+                 </h:commandLink>
+                    </h:form>
+            </p:panel>
+
+            <p:dialog header="Análisis de ventas" widgetVar="dlg1" minHeight="40">
+                <p:chart type="line" model="#{ventasBean.chartModel}" style="height:300px;"/>
+            </p:dialog>
+
         
+
     </ui:define>
 
 </ui:composition>

@@ -119,6 +119,8 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 venta.setProducto(muebles.get(e));
                 venta.setFechaVenta(new Date(r.nextInt()));
                 venta.setCiudad("Bogotá");
+                venta.setComprador(new Usuario("cliente" + e, null, TipoUsuario.Administrador));
+                registrosVentas.add(venta);
             }
         }
     }
